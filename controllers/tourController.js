@@ -39,6 +39,16 @@ const getTour = (req, res) => {
   });
 };
 
+const checkBody = (req, res, next) => {
+  if(!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price'
+    })
+  }
+  next()
+}
+
 const createTour = (req, res) => {
   const tourId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: tourId }, req.body);
@@ -80,4 +90,5 @@ const deleteTour = (req, res) => {
   });
 };
 
-module.exports = { getAllTours, getTour, createTour, updateTour, deleteTour, checkID };
+module.exports = { getAllTours, getTour, createTour, updateTour, deleteTour, checkID, checkBody };
+
